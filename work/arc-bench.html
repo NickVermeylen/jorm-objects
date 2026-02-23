@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arc Bench — jorm.objects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="../index.html" class="nav__logo">jorm.objects</a>
+    <ul class="nav__links">
+      <li><a href="../work.html" class="active">Work</a></li>
+      <li><a href="../shop.html">Shop</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+    <button class="nav__hamburger" aria-label="Menu">&#9776;</button>
+  </nav>
+
+  <div class="nav__overlay">
+    <button class="nav__close" aria-label="Close">&times;</button>
+    <a href="../work.html">Work</a>
+    <a href="../shop.html">Shop</a>
+    <a href="../about.html">About</a>
+    <a href="../contact.html">Contact</a>
+  </div>
+
+  <main class="detail">
+    <a href="../work.html" class="detail__back">&larr; Back to Work</a>
+    <h1 class="detail__title">Arc Bench</h1>
+    <p class="detail__year">2025</p>
+
+    <div class="detail__images">
+      <div class="detail__img">800 &times; 600</div>
+      <div class="detail__img">800 &times; 600</div>
+      <div class="detail__img">800 &times; 600</div>
+      <div class="detail__img">800 &times; 600</div>
+    </div>
+
+    <div class="detail__body">
+      <div class="detail__description">
+        <p>A continuous arc of steam-bent oak meets a minimal steel base. The Arc Bench explores the relationship between organic curve and industrial precision — a single sweeping gesture that serves as both seating and sculptural presence.</p>
+      </div>
+      <dl class="detail__specs">
+        <dt>Materials</dt>
+        <dd>Oak + Steel</dd>
+        <dt>Dimensions</dt>
+        <dd>180 &times; 45 &times; 42 cm</dd>
+        <dt>Category</dt>
+        <dd>Furniture</dd>
+        <dt>Edition</dt>
+        <dd>Open</dd>
+      </dl>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>&copy; 2026 jorm.objects</span>
+    <ul class="footer__links">
+      <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    document.querySelector('.nav__hamburger').addEventListener('click', () => {
+      document.querySelector('.nav__overlay').classList.add('open');
+    });
+    document.querySelector('.nav__close').addEventListener('click', () => {
+      document.querySelector('.nav__overlay').classList.remove('open');
+    });
+  </script>
+</body>
+</html>

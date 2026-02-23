@@ -210,6 +210,19 @@ h1, h2, h3, h4 {
   .page-header h1 {
     font-size: 2rem;
   }
+
+  .detail__images {
+    grid-template-columns: 1fr;
+  }
+
+  .detail__body {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .detail__title {
+    font-size: 2rem;
+  }
 }
 
 /* --- Home: Hero --- */
@@ -392,4 +405,112 @@ h1, h2, h3, h4 {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* --- Detail Page --- */
+.detail {
+  padding: 4rem 2rem;
+}
+
+.detail__back {
+  display: inline-block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+
+.detail__back:hover {
+  color: var(--accent);
+}
+
+.detail__title {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.detail__year {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+.detail__images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: var(--border-width) solid var(--border);
+  margin-bottom: 3rem;
+}
+
+.detail__img {
+  aspect-ratio: 4 / 3;
+  background-color: #C0C0C0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  border: var(--border-width) solid var(--border);
+}
+
+.detail__body {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 4rem;
+  max-width: 900px;
+}
+
+.detail__description {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.detail__specs {
+  font-size: 0.85rem;
+}
+
+.detail__specs dt {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-top: 1.5rem;
+}
+
+.detail__specs dt:first-child {
+  margin-top: 0;
+}
+
+.detail__specs dd {
+  margin-top: 0.25rem;
+  color: #666;
+}
+
+/* --- Inquire Button (shop detail) --- */
+.detail__inquire {
+  display: inline-block;
+  margin-top: 3rem;
+  padding: 1rem 2rem;
+  border: var(--border-width) solid var(--border);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  background: none;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.detail__inquire:hover {
+  background-color: var(--accent);
+}
+
+.detail__price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  text-transform: uppercase;
 }
