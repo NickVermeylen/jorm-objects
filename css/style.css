@@ -587,3 +587,90 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
+/* --- Contact --- */
+.contact {
+  padding: 4rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form__group label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.form__group input,
+.form__group select,
+.form__group textarea {
+  font-family: var(--font);
+  font-size: 0.85rem;
+  padding: 0.75rem;
+  border: var(--border-width) solid var(--border);
+  background: none;
+  color: var(--text);
+  outline: none;
+}
+
+.form__group input:focus,
+.form__group select:focus,
+.form__group textarea:focus {
+  border-color: var(--accent);
+}
+
+.form__group textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.form__submit {
+  font-family: var(--font);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  padding: 1rem 2rem;
+  border: var(--border-width) solid var(--border);
+  background: none;
+  cursor: pointer;
+  color: var(--text);
+  align-self: flex-start;
+}
+
+.form__submit:hover {
+  background-color: var(--accent);
+}
+
+.contact__info {
+  font-size: 0.85rem;
+}
+
+.contact__info h2 {
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5rem;
+}
+
+.contact__info p {
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.contact__info a:hover {
+  color: var(--accent);
+}
