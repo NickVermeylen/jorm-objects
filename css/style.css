@@ -514,3 +514,9 @@ h1, h2, h3, h4 {
   margin-top: 2rem;
   text-transform: uppercase;
 }
+
+.grid__price {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-weight: 700;
+}
