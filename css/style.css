@@ -192,7 +192,7 @@ h1, h2, h3, h4 {
   }
 
   .hero__title {
-    font-size: 20vw;
+    font-size: 8vw;
   }
 
   .featured__grid {
@@ -240,7 +240,7 @@ h1, h2, h3, h4 {
 }
 
 .hero__title {
-  font-size: 15vw;
+  font-size: 5.5vw;
   line-height: 0.9;
   text-transform: lowercase;
 }
