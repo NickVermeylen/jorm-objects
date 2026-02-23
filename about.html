@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — jorm.objects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav__logo">jorm.objects</a>
+    <ul class="nav__links">
+      <li><a href="work.html">Work</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav__hamburger" aria-label="Menu">&#9776;</button>
+  </nav>
+
+  <div class="nav__overlay">
+    <button class="nav__close" aria-label="Close">&times;</button>
+    <a href="work.html">Work</a>
+    <a href="shop.html">Shop</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <main>
+    <header class="page-header">
+      <h1>About</h1>
+    </header>
+
+    <section class="about">
+      <div class="about__text">
+        <h2>Studio Philosophy</h2>
+        <p>jorm.objects exists at the intersection of craft and concept. Every piece begins with a material — its weight, its grain, its willingness to be shaped — and a question about how objects occupy space.</p>
+        <p>We believe in structural honesty: nothing decorative that doesn't serve, nothing hidden that should be seen. Our work embraces tension, asymmetry, and the beauty of visible construction.</p>
+
+        <h2>Process</h2>
+        <p>Each project begins with material studies and hand sketches before moving to prototyping. We work directly with fabricators and artisans, maintaining hands-on involvement from concept through final production.</p>
+        <p>Limited editions and one-offs are produced in our workshop. Production pieces are manufactured in partnership with small-batch facilities across Northern Europe.</p>
+      </div>
+      <div class="about__image">600 &times; 800</div>
+    </section>
+
+    <section class="about__press">
+      <h2>Press &amp; Features</h2>
+      <ul>
+        <li>Dezeen — 'Emerging studios redefining Nordic object design' — 2025</li>
+        <li>Wallpaper* — 'Objects of restraint' — 2024</li>
+        <li>Sight Unseen — 'Material honesty in contemporary furniture' — 2024</li>
+        <li>Disegno Journal — 'The tension principle' — 2023</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>&copy; 2026 jorm.objects</span>
+    <ul class="footer__links">
+      <li><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    document.querySelector('.nav__hamburger').addEventListener('click', () => {
+      document.querySelector('.nav__overlay').classList.add('open');
+    });
+    document.querySelector('.nav__close').addEventListener('click', () => {
+      document.querySelector('.nav__overlay').classList.remove('open');
+    });
+  </script>
+</body>
+</html>

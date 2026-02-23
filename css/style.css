@@ -223,6 +223,14 @@ h1, h2, h3, h4 {
   .detail__title {
     font-size: 2rem;
   }
+
+  .about {
+    grid-template-columns: 1fr;
+  }
+
+  .contact {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* --- Home: Hero --- */
@@ -519,4 +527,63 @@ h1, h2, h3, h4 {
   font-size: 0.85rem;
   margin-top: 0.5rem;
   font-weight: 700;
+}
+
+/* --- About --- */
+.about {
+  padding: 4rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.about__text h2 {
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.about__text h2:first-child {
+  margin-top: 0;
+}
+
+.about__text p {
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.about__image {
+  aspect-ratio: 3 / 4;
+  background-color: #C0C0C0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  border: var(--border-width) solid var(--border);
+}
+
+.about__press {
+  padding: 4rem 2rem;
+  border-top: var(--border-width) solid var(--border);
+}
+
+.about__press h2 {
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5rem;
+}
+
+.about__press ul {
+  list-style: none;
+}
+
+.about__press li {
+  font-size: 0.85rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #ccc;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
