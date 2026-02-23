@@ -45,6 +45,12 @@ img {
   max-width: 100%;
 }
 
+.featured__img,
+.grid__img,
+.detail__img {
+  object-fit: cover;
+}
+
 h1, h2, h3, h4 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
