@@ -1,0 +1,24 @@
+---
+layout: base.njk
+pageTitle: Shop
+navSection: shop
+permalink: /shop/
+---
+<main>
+  <header class="page-header">
+    <h1>Shop</h1>
+  </header>
+
+  <div class="grid">
+    {%- for item in collections.shop %}
+    <a href="{{ item.url }}" class="grid__item">
+      <img src="{{ item.data.thumbnail }}" alt="{{ item.data.thumbnailAlt }}" class="grid__img" loading="lazy">
+      <div class="grid__info">
+        <div class="grid__title">{{ item.data.title }}</div>
+        <div class="grid__meta">{{ item.data.year }}</div>
+        <div class="grid__price">{{ item.data.price }}</div>
+      </div>
+    </a>
+    {%- endfor %}
+  </div>
+</main>

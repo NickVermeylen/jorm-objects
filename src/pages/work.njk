@@ -1,0 +1,46 @@
+---
+layout: base.njk
+pageTitle: Work
+navSection: work
+permalink: /work/
+---
+<main>
+  <header class="page-header">
+    <h1>Work</h1>
+  </header>
+
+  <div class="filters">
+    <button class="filters__btn active" data-category="all">All</button>
+    <button class="filters__btn" data-category="furniture">Furniture</button>
+    <button class="filters__btn" data-category="lighting">Lighting</button>
+    <button class="filters__btn" data-category="sculpture">Sculpture</button>
+    <button class="filters__btn" data-category="objects">Objects</button>
+  </div>
+
+  <div class="grid">
+    {%- for item in collections.work %}
+    <a href="{{ item.url }}" class="grid__item" data-category="{{ item.data.category | lower }}">
+      <img src="{{ item.data.thumbnail }}" alt="{{ item.data.thumbnailAlt }}" class="grid__img"{% if not loop.first %} loading="lazy"{% endif %}>
+      <div class="grid__info">
+        <div class="grid__title">{{ item.data.title }}</div>
+        <div class="grid__meta">{{ item.data.year }}</div>
+      </div>
+    </a>
+    {%- endfor %}
+  </div>
+</main>
+
+<script>
+  const buttons = document.querySelectorAll('.filters__btn');
+  const items = document.querySelectorAll('.grid__item');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.category;
+      items.forEach(item => {
+        item.style.display = (cat === 'all' || item.dataset.category === cat) ? '' : 'none';
+      });
+    });
+  });
+</script>

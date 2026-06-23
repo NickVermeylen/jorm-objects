@@ -1,0 +1,114 @@
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "src/assets"
+public_folder: "/assets"
+
+collections:
+  - name: "work"
+    label: "Work"
+    folder: "src/work"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "work-detail.njk" }
+      - { label: "Tags", name: "tags", widget: "hidden", default: "work" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Page Title", name: "pageTitle", widget: "string" }
+      - { label: "Year", name: "year", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Furniture", "Lighting", "Sculpture", "Objects"]
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Materials", name: "materials", widget: "string" }
+      - { label: "Dimensions", name: "dimensions", widget: "string" }
+      - { label: "Edition", name: "edition", widget: "string" }
+      - label: "Images"
+        name: "images"
+        widget: "list"
+        fields:
+          - { label: "Image", name: "src", widget: "image" }
+          - { label: "Alt Text", name: "alt", widget: "string" }
+      - { label: "Thumbnail", name: "thumbnail", widget: "image" }
+      - { label: "Thumbnail Alt", name: "thumbnailAlt", widget: "string" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Featured Thumbnail", name: "featuredThumbnail", widget: "image", required: false }
+      - { label: "Featured Alt", name: "featuredAlt", widget: "string", required: false }
+      - { label: "Order", name: "order", widget: "number", value_type: "int" }
+
+  - name: "shop"
+    label: "Shop"
+    folder: "src/shop"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "shop-detail.njk" }
+      - { label: "Tags", name: "tags", widget: "hidden", default: "shop" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Page Title", name: "pageTitle", widget: "string" }
+      - { label: "Year", name: "year", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["Furniture", "Lighting", "Sculpture", "Objects"]
+      - { label: "Price", name: "price", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Materials", name: "materials", widget: "string" }
+      - { label: "Dimensions", name: "dimensions", widget: "string" }
+      - label: "Images"
+        name: "images"
+        widget: "list"
+        fields:
+          - { label: "Image", name: "src", widget: "image" }
+          - { label: "Alt Text", name: "alt", widget: "string" }
+      - { label: "Thumbnail", name: "thumbnail", widget: "image" }
+      - { label: "Thumbnail Alt", name: "thumbnailAlt", widget: "string" }
+      - { label: "Order", name: "order", widget: "number", value_type: "int" }
+
+  - name: "settings"
+    label: "Settings"
+    files:
+      - label: "Site Info"
+        name: "site"
+        file: "src/_data/site.json"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Intro Text", name: "intro", widget: "text" }
+          - { label: "Copyright Year", name: "year", widget: "string" }
+
+      - label: "Contact Info"
+        name: "contact"
+        file: "src/_data/contact.json"
+        fields:
+          - { label: "Name", name: "name", widget: "string" }
+          - { label: "Street", name: "street", widget: "string" }
+          - { label: "City", name: "city", widget: "string" }
+          - { label: "Country", name: "country", widget: "string" }
+          - { label: "Email (display)", name: "email", widget: "string" }
+          - { label: "Email (href)", name: "emailHref", widget: "string" }
+          - { label: "Instagram URL", name: "instagram", widget: "string" }
+          - { label: "Instagram Handle", name: "instagramHandle", widget: "string" }
+
+      - label: "About"
+        name: "about"
+        file: "src/_data/about.json"
+        fields:
+          - label: "Philosophy"
+            name: "philosophy"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+          - label: "Process"
+            name: "process"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+          - { label: "Studio Image", name: "studioImage", widget: "image" }
+          - { label: "Studio Image Alt", name: "studioImageAlt", widget: "string" }
+          - label: "Press"
+            name: "press"
+            widget: "list"
+            field: { label: "Entry", name: "entry", widget: "string" }

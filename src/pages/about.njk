@@ -1,0 +1,35 @@
+---
+layout: base.njk
+pageTitle: About
+navSection: about
+permalink: /about/
+---
+<main>
+  <header class="page-header">
+    <h1>About</h1>
+  </header>
+
+  <section class="about">
+    <div class="about__text">
+      <h2>Studio Philosophy</h2>
+      {%- for paragraph in about.philosophy %}
+      <p>{{ paragraph | safe }}</p>
+      {%- endfor %}
+
+      <h2>Process</h2>
+      {%- for paragraph in about.process %}
+      <p>{{ paragraph | safe }}</p>
+      {%- endfor %}
+    </div>
+    <img src="{{ about.studioImage }}" alt="{{ about.studioImageAlt }}" class="about__image">
+  </section>
+
+  <section class="about__press">
+    <h2>Press &amp; Features</h2>
+    <ul>
+      {%- for item in about.press %}
+      <li>{{ item | safe }}</li>
+      {%- endfor %}
+    </ul>
+  </section>
+</main>

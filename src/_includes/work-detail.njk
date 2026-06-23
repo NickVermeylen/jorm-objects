@@ -1,0 +1,31 @@
+---
+layout: base.njk
+navSection: work
+---
+<main class="detail">
+  <a href="/work/" class="detail__back">&larr; Back to Work</a>
+  <h1 class="detail__title">{{ title }}</h1>
+  <p class="detail__year">{{ year }}</p>
+
+  <div class="detail__images">
+    {%- for img in images %}
+    <img src="{{ img.src }}" alt="{{ img.alt }}" class="detail__img" loading="lazy">
+    {%- endfor %}
+  </div>
+
+  <div class="detail__body">
+    <div class="detail__description">
+      <p>{{ description }}</p>
+    </div>
+    <dl class="detail__specs">
+      <dt>Materials</dt>
+      <dd>{{ materials }}</dd>
+      <dt>Dimensions</dt>
+      <dd>{{ dimensions }}</dd>
+      <dt>Category</dt>
+      <dd>{{ category }}</dd>
+      <dt>Edition</dt>
+      <dd>{{ edition }}</dd>
+    </dl>
+  </div>
+</main>

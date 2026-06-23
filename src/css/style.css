@@ -15,7 +15,7 @@
   --text: #1A1A1A;
   --accent: #D9EEF9;
   --border: #000000;
-  --border-width: 2px;
+  --border-width: 1px;
   --font: 'Space Mono', monospace;
 }
 
@@ -460,6 +460,8 @@ h1, h2, h3, h4 {
 
 .detail__img {
   aspect-ratio: 4 / 3;
+  max-height: 40vh;
+  width: 100%;
   background-color: #C0C0C0;
   display: flex;
   align-items: center;

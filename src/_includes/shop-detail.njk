@@ -1,0 +1,31 @@
+---
+layout: base.njk
+navSection: shop
+---
+<main class="detail">
+  <a href="/shop/" class="detail__back">&larr; Back to Shop</a>
+  <h1 class="detail__title">{{ title }}</h1>
+  <p class="detail__year">{{ year }}</p>
+
+  <div class="detail__images">
+    {%- for img in images %}
+    <img src="{{ img.src }}" alt="{{ img.alt }}" class="detail__img" loading="lazy">
+    {%- endfor %}
+  </div>
+
+  <div class="detail__body">
+    <div class="detail__description">
+      <p>{{ description }}</p>
+    </div>
+    <dl class="detail__specs">
+      <dt>Materials</dt>
+      <dd>{{ materials }}</dd>
+      <dt>Dimensions</dt>
+      <dd>{{ dimensions }}</dd>
+      <dt>Category</dt>
+      <dd>{{ category }}</dd>
+    </dl>
+    <div class="detail__price">{{ price }}</div>
+    <a href="/contact/?piece={{ title | uriencode }}" class="detail__inquire">Inquire About This Piece &rarr;</a>
+  </div>
+</main>

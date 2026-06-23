@@ -1,0 +1,30 @@
+---
+layout: base.njk
+permalink: /
+---
+<main>
+  <section class="hero">
+    <h1 class="hero__title">{{ site.title }}</h1>
+    <p class="hero__tagline">{{ site.tagline }}</p>
+  </section>
+
+  <section class="featured">
+    <h2 class="featured__heading">Selected Work</h2>
+    <div class="featured__grid">
+      {%- for item in collections.work %}
+      {%- if item.data.featured %}
+      <a href="{{ item.url }}" class="featured__item">
+        <img src="{{ item.data.featuredThumbnail }}" alt="{{ item.data.featuredAlt }}" class="featured__img"{% if not loop.first %} loading="lazy"{% endif %}>
+        <div class="featured__label">{{ item.data.title }} — {{ item.data.year }}</div>
+      </a>
+      {%- endif %}
+      {%- endfor %}
+    </div>
+  </section>
+
+  <section class="intro container">
+    <p>{{ site.intro }}</p>
+  </section>
+
+  <a href="/shop/" class="shop-cta">Shop Available Pieces &rarr;</a>
+</main>
