@@ -11,12 +11,7 @@
 
 /* --- Variables --- */
 :root {
-  --bg: #F0EDE8;
-  --text: #1A1A1A;
-  --accent: #D9EEF9;
-  --border: #000000;
   --border-width: 1px;
-  --font: 'Space Mono', monospace;
 }
 
 /* --- Base --- */

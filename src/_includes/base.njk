@@ -6,8 +6,17 @@
   <title>{{ pageTitle }}{% if pageTitle %} — {% endif %}jorm.objects</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="{{ design.fonts.bodyUrl }}" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
+  <style id="design-tokens">
+    :root {
+      --bg: {{ design.colors.bg }};
+      --text: {{ design.colors.text }};
+      --accent: {{ design.colors.accent }};
+      --border: {{ design.colors.border }};
+      --font: '{{ design.fonts.body }}', monospace;
+    }
+  </style>
 </head>
 <body>
   <nav class="nav">
@@ -47,5 +56,54 @@
     });
   </script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    // Design Studio live preview bridge
+    window.addEventListener('message', (e) => {
+      if (e.origin !== 'http://localhost:8082') return;
+
+      if (e.data.type === 'design-update') {
+        const { colors, font, fontUrl } = e.data;
+        const style = document.getElementById('design-tokens');
+        if (style) {
+          style.textContent = `:root { --bg:${colors.bg};--text:${colors.text};--accent:${colors.accent};--border:${colors.border};--font:'${font}',monospace; }`;
+        }
+        let link = document.getElementById('studio-font-link');
+        if (!link) {
+          link = document.createElement('link');
+          link.id = 'studio-font-link';
+          link.rel = 'stylesheet';
+          document.head.appendChild(link);
+        }
+        link.href = fontUrl;
+      }
+
+      if (e.data.type === 'sections-update') {
+        const order = e.data.sections;
+        const main = document.querySelector('main');
+        if (!main) return;
+        const map = {};
+        main.querySelectorAll('[data-section]').forEach(el => {
+          map[el.dataset.section] = el;
+          el.style.display = 'none';
+        });
+        for (const sec of order) {
+          const el = map[sec.id];
+          if (!el) continue;
+          el.style.display = sec.visible ? '' : 'none';
+          if (sec.visible) main.appendChild(el);
+        }
+      }
+    });
+
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>

@@ -3,12 +3,18 @@ layout: base.njk
 permalink: /
 ---
 <main>
-  <section class="hero">
+{%- for section in homeSections %}
+{%- if section.visible %}
+
+{%- if section.id == "hero" %}
+  <section class="hero" data-section="hero">
     <h1 class="hero__title">{{ site.title }}</h1>
     <p class="hero__tagline">{{ site.tagline }}</p>
   </section>
+{%- endif %}
 
-  <section class="featured">
+{%- if section.id == "featured" %}
+  <section class="featured" data-section="featured">
     <h2 class="featured__heading">Selected Work</h2>
     <div class="featured__grid">
       {%- for item in collections.work %}
@@ -21,10 +27,18 @@ permalink: /
       {%- endfor %}
     </div>
   </section>
+{%- endif %}
 
-  <section class="intro container">
+{%- if section.id == "intro" %}
+  <section class="intro container" data-section="intro">
     <p>{{ site.intro }}</p>
   </section>
+{%- endif %}
 
-  <a href="/shop/" class="shop-cta">Shop Available Pieces &rarr;</a>
+{%- if section.id == "shopCta" %}
+  <a href="/shop/" class="shop-cta" data-section="shopCta">Shop Available Pieces &rarr;</a>
+{%- endif %}
+
+{%- endif %}
+{%- endfor %}
 </main>

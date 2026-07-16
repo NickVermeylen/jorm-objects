@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Studio — jorm.objects</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --panel: #111;
+      --panel-border: #2a2a2a;
+      --panel-hover: #1e1e1e;
+      --label: #888;
+      --fg: #e5e5e5;
+      --fg-dim: #666;
+      --accent: #4f6ef7;
+      --danger: #e55;
+      --radius: 4px;
+      --font: 'Space Mono', monospace;
+    }
+
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      display: flex;
+      background: #0a0a0a;
+      font-family: var(--font);
+      font-size: 12px;
+      color: var(--fg);
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      background: var(--panel);
+      border-right: 1px solid var(--panel-border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar__header {
+      padding: 16px;
+      border-bottom: 1px solid var(--panel-border);
+    }
+
+    .sidebar__title {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--label);
+    }
+
+    .sidebar__site {
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 2px;
+      color: var(--fg);
+    }
+
+    .sidebar__body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 0 80px;
+    }
+
+    .sidebar__body::-webkit-scrollbar { width: 4px; }
+    .sidebar__body::-webkit-scrollbar-track { background: transparent; }
+    .sidebar__body::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+    /* ── Section groups ── */
+    .group {
+      border-bottom: 1px solid var(--panel-border);
+    }
+
+    .group__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .group__header:hover { background: var(--panel-hover); }
+
+    .group__title {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--label);
+    }
+
+    .group__arrow {
+      color: var(--fg-dim);
+      font-size: 10px;
+      transition: transform 0.15s;
+    }
+
+    .group.open .group__arrow { transform: rotate(90deg); }
+
+    .group__body {
+      display: none;
+      padding: 4px 16px 16px;
+    }
+
+    .group.open .group__body { display: block; }
+
+    /* ── Controls ── */
+    .field {
+      margin-top: 12px;
+    }
+
+    .field__label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--label);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .color-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .color-row input[type="color"] {
+      width: 32px;
+      height: 28px;
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      background: none;
+      cursor: pointer;
+      padding: 2px;
+    }
+
+    .color-row input[type="text"] {
+      flex: 1;
+      background: #1a1a1a;
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      color: var(--fg);
+      font-family: var(--font);
+      font-size: 11px;
+      padding: 5px 8px;
+      outline: none;
+    }
+
+    .color-row input[type="text"]:focus {
+      border-color: var(--accent);
+    }
+
+    select {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      color: var(--fg);
+      font-family: var(--font);
+      font-size: 11px;
+      padding: 6px 8px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    select:focus { border-color: var(--accent); }
+
+    /* ── Section list ── */
+    #sections-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .section-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: #1a1a1a;
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      cursor: grab;
+      user-select: none;
+    }
+
+    .section-item.dragging {
+      opacity: 0.4;
+      cursor: grabbing;
+    }
+
+    .section-item.drag-over {
+      border-color: var(--accent);
+    }
+
+    .drag-handle {
+      color: var(--fg-dim);
+      font-size: 14px;
+      line-height: 1;
+      cursor: grab;
+      flex-shrink: 0;
+    }
+
+    .section-label {
+      flex: 1;
+      font-size: 11px;
+      color: var(--fg);
+    }
+
+    .section-toggle {
+      flex-shrink: 0;
+      width: 28px;
+      height: 16px;
+      background: #333;
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+      border: none;
+      transition: background 0.15s;
+    }
+
+    .section-toggle.on { background: var(--accent); }
+
+    .section-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.15s;
+    }
+
+    .section-toggle.on::after { transform: translateX(12px); }
+
+    /* ── Footer actions ── */
+    .sidebar__footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 260px;
+      padding: 12px 16px;
+      background: var(--panel);
+      border-top: 1px solid var(--panel-border);
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn {
+      flex: 1;
+      font-family: var(--font);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      border: 1px solid transparent;
+      font-weight: 700;
+    }
+
+    .btn--save {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn--save:hover { opacity: 0.85; }
+
+    .btn--reset {
+      background: transparent;
+      color: var(--label);
+      border-color: var(--panel-border);
+    }
+
+    .btn--reset:hover { color: var(--fg); border-color: #444; }
+
+    .save-status {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--label);
+      text-align: center;
+      margin-top: 6px;
+      min-height: 12px;
+      width: 100%;
+    }
+
+    /* ── Preview pane ── */
+    #preview-pane {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .preview-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px;
+      background: #0f0f0f;
+      border-bottom: 1px solid var(--panel-border);
+      flex-shrink: 0;
+    }
+
+    .preview-url {
+      flex: 1;
+      background: #1a1a1a;
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      padding: 5px 10px;
+      font-family: var(--font);
+      font-size: 10px;
+      color: var(--label);
+    }
+
+    .preview-nav {
+      display: flex;
+      gap: 4px;
+    }
+
+    .preview-nav button {
+      background: #1a1a1a;
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      color: var(--label);
+      font-family: var(--font);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .preview-nav button:hover { color: var(--fg); border-color: #444; }
+    .preview-nav button.active { color: var(--fg); border-color: var(--accent); background: #1a2040; }
+
+    .preview-status {
+      font-size: 9px;
+      color: var(--fg-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    #preview-frame {
+      flex: 1;
+      border: none;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Sidebar ── -->
+<aside id="sidebar">
+  <div class="sidebar__header">
+    <div class="sidebar__title">Design Studio</div>
+    <div class="sidebar__site">jorm.objects</div>
+  </div>
+
+  <div class="sidebar__body">
+
+    <!-- Colors -->
+    <div class="group open" id="group-colors">
+      <div class="group__header" onclick="toggleGroup('group-colors')">
+        <span class="group__title">Colors</span>
+        <span class="group__arrow">▶</span>
+      </div>
+      <div class="group__body">
+        <div class="field">
+          <label class="field__label">Background</label>
+          <div class="color-row">
+            <input type="color" id="color-bg" oninput="syncColor('bg', this.value)">
+            <input type="text" id="hex-bg" maxlength="7" oninput="syncHex('bg', this.value)">
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label">Text</label>
+          <div class="color-row">
+            <input type="color" id="color-text" oninput="syncColor('text', this.value)">
+            <input type="text" id="hex-text" maxlength="7" oninput="syncHex('text', this.value)">
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label">Accent</label>
+          <div class="color-row">
+            <input type="color" id="color-accent" oninput="syncColor('accent', this.value)">
+            <input type="text" id="hex-accent" maxlength="7" oninput="syncHex('accent', this.value)">
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label">Border</label>
+          <div class="color-row">
+            <input type="color" id="color-border" oninput="syncColor('border', this.value)">
+            <input type="text" id="hex-border" maxlength="7" oninput="syncHex('border', this.value)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fonts -->
+    <div class="group open" id="group-fonts">
+      <div class="group__header" onclick="toggleGroup('group-fonts')">
+        <span class="group__title">Typography</span>
+        <span class="group__arrow">▶</span>
+      </div>
+      <div class="group__body">
+        <div class="field">
+          <label class="field__label">Body Font</label>
+          <select id="font-select" onchange="changeFont(this.value)"></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sections -->
+    <div class="group open" id="group-sections">
+      <div class="group__header" onclick="toggleGroup('group-sections')">
+        <span class="group__title">Home Sections</span>
+        <span class="group__arrow">▶</span>
+      </div>
+      <div class="group__body">
+        <p style="font-size:10px;color:#666;margin-bottom:8px;line-height:1.5">Drag to reorder. Toggle to show/hide.</p>
+        <ul id="sections-list"></ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sidebar__footer" style="flex-direction:column;">
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn--reset" onclick="resetChanges()">Discard</button>
+      <button class="btn btn--save" onclick="saveAll()">Save &amp; Rebuild</button>
+    </div>
+    <div class="save-status" id="save-status"></div>
+  </div>
+</aside>
+
+<!-- ── Preview ── -->
+<div id="preview-pane">
+  <div class="preview-toolbar">
+    <span class="preview-url">http://localhost:8080</span>
+    <div class="preview-nav">
+      <button class="active" onclick="navigate('/')">Home</button>
+      <button onclick="navigate('/work/')">Work</button>
+      <button onclick="navigate('/shop/')">Shop</button>
+      <button onclick="navigate('/about/')">About</button>
+      <button onclick="navigate('/contact/')">Contact</button>
+    </div>
+    <span class="preview-status" id="preview-status">Live</span>
+  </div>
+  <iframe id="preview-frame" src="http://localhost:8080"></iframe>
+</div>
+
+<script>
+  const API = 'http://localhost:8082';
+  let state = { design: null, sections: [], fonts: [] };
+  let saved = { design: null, sections: [] };
+  let dragSrc = null;
+
+  // ── Boot ──
+  async function boot() {
+    const res = await fetch(`${API}/api/state`);
+    const data = await res.json();
+    state.design = JSON.parse(JSON.stringify(data.design));
+    state.sections = JSON.parse(JSON.stringify(data.sections));
+    state.fonts = data.fonts;
+    saved.design = JSON.parse(JSON.stringify(data.design));
+    saved.sections = JSON.parse(JSON.stringify(data.sections));
+    renderColors();
+    renderFonts();
+    renderSections();
+  }
+
+  // ── Colors ──
+  function renderColors() {
+    const c = state.design.colors;
+    for (const key of ['bg', 'text', 'accent', 'border']) {
+      document.getElementById(`color-${key}`).value = c[key];
+      document.getElementById(`hex-${key}`).value = c[key];
+    }
+  }
+
+  function syncColor(key, value) {
+    state.design.colors[key] = value;
+    document.getElementById(`hex-${key}`).value = value;
+    applyTokensToPreview();
+  }
+
+  function syncHex(key, value) {
+    if (/^#[0-9a-fA-F]{6}$/.test(value)) {
+      state.design.colors[key] = value;
+      document.getElementById(`color-${key}`).value = value;
+      applyTokensToPreview();
+    }
+  }
+
+  // ── Fonts ──
+  function renderFonts() {
+    const sel = document.getElementById('font-select');
+    sel.innerHTML = '';
+    for (const f of state.fonts) {
+      const opt = document.createElement('option');
+      opt.value = f.name;
+      opt.textContent = f.name;
+      if (f.name === state.design.fonts.body) opt.selected = true;
+      sel.appendChild(opt);
+    }
+  }
+
+  function changeFont(name) {
+    state.design.fonts.body = name;
+    const match = state.fonts.find(f => f.name === name);
+    if (match) state.design.fonts.bodyUrl = match.url;
+    applyTokensToPreview();
+  }
+
+  // ── postMessage preview injection ──
+  function applyTokensToPreview() {
+    const frame = document.getElementById('preview-frame');
+    frame.contentWindow.postMessage({
+      type: 'design-update',
+      colors: state.design.colors,
+      font: state.design.fonts.body,
+      fontUrl: state.design.fonts.bodyUrl,
+    }, '*');
+  }
+
+  // ── Sections ──
+  function renderSections() {
+    const list = document.getElementById('sections-list');
+    list.innerHTML = '';
+    for (let i = 0; i < state.sections.length; i++) {
+      const sec = state.sections[i];
+      const li = document.createElement('li');
+      li.className = 'section-item';
+      li.draggable = true;
+      li.dataset.index = i;
+      li.innerHTML = `
+        <span class="drag-handle">⠿</span>
+        <span class="section-label">${sec.label}</span>
+        <button class="section-toggle ${sec.visible ? 'on' : ''}" onclick="toggleSection(${i})" title="${sec.visible ? 'Hide' : 'Show'}"></button>
+      `;
+      li.addEventListener('dragstart', onDragStart);
+      li.addEventListener('dragover', onDragOver);
+      li.addEventListener('drop', onDrop);
+      li.addEventListener('dragend', onDragEnd);
+      list.appendChild(li);
+    }
+    applySectionsToPreview();
+  }
+
+  function toggleSection(i) {
+    state.sections[i].visible = !state.sections[i].visible;
+    renderSections();
+  }
+
+  function applySectionsToPreview() {
+    const frame = document.getElementById('preview-frame');
+    frame.contentWindow.postMessage({
+      type: 'sections-update',
+      sections: state.sections,
+    }, '*');
+  }
+
+  // ── Drag & drop ──
+  function onDragStart(e) {
+    dragSrc = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  }
+
+  function onDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    document.querySelectorAll('.section-item').forEach(el => el.classList.remove('drag-over'));
+    this.classList.add('drag-over');
+  }
+
+  function onDrop(e) {
+    e.preventDefault();
+    if (this === dragSrc) return;
+    const from = parseInt(dragSrc.dataset.index);
+    const to = parseInt(this.dataset.index);
+    const [moved] = state.sections.splice(from, 1);
+    state.sections.splice(to, 0, moved);
+    renderSections();
+  }
+
+  function onDragEnd() {
+    document.querySelectorAll('.section-item').forEach(el => {
+      el.classList.remove('dragging', 'drag-over');
+    });
+  }
+
+  // ── Save ──
+  async function saveAll() {
+    setStatus('Saving…');
+    try {
+      await Promise.all([
+        fetch(`${API}/api/design`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(state.design),
+        }),
+        fetch(`${API}/api/sections`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(state.sections),
+        }),
+      ]);
+      saved.design = JSON.parse(JSON.stringify(state.design));
+      saved.sections = JSON.parse(JSON.stringify(state.sections));
+      setStatus('Saved — rebuilding…');
+      // Wait for Eleventy to rebuild then reload the iframe
+      setTimeout(() => {
+        reloadPreview();
+        setStatus('Done.');
+        setTimeout(() => setStatus(''), 3000);
+      }, 2500);
+    } catch (e) {
+      setStatus('Error: ' + e.message);
+    }
+  }
+
+  function resetChanges() {
+    state.design = JSON.parse(JSON.stringify(saved.design));
+    state.sections = JSON.parse(JSON.stringify(saved.sections));
+    renderColors();
+    renderFonts();
+    renderSections();
+    applyTokensToPreview();
+    setStatus('Discarded.');
+    setTimeout(() => setStatus(''), 2000);
+  }
+
+  function setStatus(msg) {
+    document.getElementById('save-status').textContent = msg;
+  }
+
+  // ── Preview nav ──
+  function navigate(path) {
+    document.querySelectorAll('.preview-nav button').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('preview-frame').src = 'http://localhost:8080' + path;
+  }
+
+  function reloadPreview() {
+    const frame = document.getElementById('preview-frame');
+    frame.src = frame.src;
+  }
+
+  // ── Re-apply after iframe navigates ──
+  document.getElementById('preview-frame').addEventListener('load', () => {
+    setTimeout(() => {
+      applyTokensToPreview();
+      applySectionsToPreview();
+      document.getElementById('preview-status').textContent = 'Live';
+    }, 100);
+  });
+
+  // ── Groups collapse ──
+  function toggleGroup(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  boot();
+</script>
+</body>
+</html>

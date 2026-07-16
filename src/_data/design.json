@@ -1,0 +1,12 @@
+{
+  "colors": {
+    "bg": "#F0EDE8",
+    "text": "#1A1A1A",
+    "accent": "#D9EEF9",
+    "border": "#000000"
+  },
+  "fonts": {
+    "body": "Space Mono",
+    "bodyUrl": "https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+  }
+}
