@@ -21,7 +21,7 @@ permalink: /
     </h1>
     <div class="hero__bottom">
       <p class="hero__tagline">{{ site.tagline }}</p>
-      <a class="hero__scroll" href="#selected-work">Scroll to explore <span>↓</span></a>
+      <a class="hero__scroll" href="#about-studio">Scroll to explore <span>↓</span></a>
     </div>
   </section>
 {%- endif %}
@@ -29,8 +29,7 @@ permalink: /
 {%- if section.id == "featured" %}
   <section class="featured" data-section="featured" id="selected-work">
     <div class="section-heading">
-      <h2 class="featured__heading">Selected work</h2>
-      <a href="/work/" class="section-heading__link">View all work <span>↗</span></a>
+      <h2 class="featured__heading">Selected projects</h2>
     </div>
     <div class="featured__grid">
       {%- for item in collections.work %}
@@ -46,7 +45,7 @@ permalink: /
 {%- endif %}
 
 {%- if section.id == "intro" %}
-  <section class="intro" data-section="intro">
+  <section class="intro" data-section="intro" id="about-studio">
     <p class="eyebrow">About the studio</p>
     <p class="intro__statement">{{ site.intro }}</p>
     <a href="/about/" class="text-link">Read our approach <span>↗</span></a>
@@ -54,39 +53,9 @@ permalink: /
 {%- endif %}
 
 {%- if section.id == "shopCta" %}
-  <a href="/shop/" class="shop-cta" data-section="shopCta">Shop Available Pieces &rarr;</a>
+  <a href="/contact/" class="contact-cta" data-section="shopCta">Start a conversation</a>
 {%- endif %}
 
 {%- endif %}
 {%- endfor %}
 </main>
-
-<script>
-  (() => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const hasDeepLink = Boolean(window.location.hash);
-    let userInterrupted = false;
-    let scrollTimer;
-
-    const cancelAutoScroll = () => {
-      userInterrupted = true;
-      window.clearTimeout(scrollTimer);
-      window.removeEventListener('wheel', cancelAutoScroll);
-      window.removeEventListener('touchstart', cancelAutoScroll);
-      window.removeEventListener('keydown', cancelAutoScroll);
-    };
-
-    if (!reduceMotion && !hasDeepLink && window.scrollY < 10) {
-      window.addEventListener('wheel', cancelAutoScroll, { once: true, passive: true });
-      window.addEventListener('touchstart', cancelAutoScroll, { once: true, passive: true });
-      window.addEventListener('keydown', cancelAutoScroll, { once: true });
-
-      scrollTimer = window.setTimeout(() => {
-        if (!userInterrupted && window.scrollY < 10) {
-          document.getElementById('selected-work')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        cancelAutoScroll();
-      }, 4600);
-    }
-  })();
-</script>

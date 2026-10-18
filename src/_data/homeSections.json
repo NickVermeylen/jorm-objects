@@ -1,6 +1,6 @@
 [
   { "id": "hero",    "label": "Hero",          "visible": true },
-  { "id": "featured","label": "Selected Work",  "visible": true },
+  { "id": "featured","label": "Selected Projects",  "visible": false },
   { "id": "intro",   "label": "Intro Text",     "visible": true },
   { "id": "shopCta", "label": "Shop CTA",       "visible": true }
 ]

@@ -22,8 +22,6 @@
   <nav class="nav">
     <a href="/" class="nav__logo" aria-label="jorm.objects home"><span>jorm</span><span class="nav__dot">.</span><span>objects</span></a>
     <ul class="nav__links">
-      <li><a href="/work/"{% if navSection == "work" %} class="active"{% endif %}>Work</a></li>
-      <li><a href="/shop/"{% if navSection == "shop" %} class="active"{% endif %}>Shop</a></li>
       <li><a href="/about/"{% if navSection == "about" %} class="active"{% endif %}>About</a></li>
       <li><a href="/contact/"{% if navSection == "contact" %} class="active"{% endif %}>Contact</a></li>
     </ul>
@@ -33,8 +31,6 @@
 
   <div class="nav__overlay">
     <button class="nav__close" aria-label="Close">&times;</button>
-    <a href="/work/">Work</a>
-    <a href="/shop/">Shop</a>
     <a href="/about/">About</a>
     <a href="/contact/">Contact</a>
   </div>
