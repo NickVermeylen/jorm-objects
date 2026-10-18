@@ -1,12 +1,12 @@
 {
   "colors": {
-    "bg": "#F0EDE8",
-    "text": "#1A1A1A",
-    "accent": "#D9EEF9",
-    "border": "#000000"
+    "bg": "#ECECE7",
+    "text": "#171716",
+    "accent": "#D4D4CE",
+    "border": "#1D1D1B"
   },
   "fonts": {
-    "body": "Space Mono",
-    "bodyUrl": "https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    "body": "Outfit",
+    "bodyUrl": "https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
   }
 }

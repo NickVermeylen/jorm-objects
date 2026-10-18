@@ -20,14 +20,15 @@
 </head>
 <body>
   <nav class="nav">
-    <a href="/" class="nav__logo">jorm.objects</a>
+    <a href="/" class="nav__logo" aria-label="jorm.objects home"><span>jorm</span><span class="nav__dot">.</span><span>objects</span></a>
     <ul class="nav__links">
       <li><a href="/work/"{% if navSection == "work" %} class="active"{% endif %}>Work</a></li>
       <li><a href="/shop/"{% if navSection == "shop" %} class="active"{% endif %}>Shop</a></li>
       <li><a href="/about/"{% if navSection == "about" %} class="active"{% endif %}>About</a></li>
       <li><a href="/contact/"{% if navSection == "contact" %} class="active"{% endif %}>Contact</a></li>
     </ul>
-    <button class="nav__hamburger" aria-label="Menu">&#9776;</button>
+    <div class="nav__meta">Antwerp, BE<br>Est. 2021</div>
+    <button class="nav__hamburger" aria-label="Open menu"><span></span><span></span></button>
   </nav>
 
   <div class="nav__overlay">
@@ -41,10 +42,12 @@
   {{ content | safe }}
 
   <footer class="footer">
-    <span>&copy; {{ site.year }} jorm.objects</span>
-    <ul class="footer__links">
-      <li><a href="{{ contact.instagram }}" target="_blank" rel="noopener">Instagram</a></li>
-    </ul>
+    <a href="/" class="footer__mark">jorm<span>.</span><br>objects</a>
+    <div class="footer__message">Objects with a point of view.<br>Made for considered spaces.</div>
+    <div class="footer__utility">
+      <span>&copy; {{ site.year }} jorm.objects</span>
+      <a href="{{ contact.instagram }}" target="_blank" rel="noopener">Instagram ↗</a>
+    </div>
   </footer>
 
   <script>

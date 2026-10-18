@@ -10,6 +10,7 @@ const STUDIO_HTML = path.join(__dirname, "index.html");
 
 const FONT_OPTIONS = [
   { name: "Space Mono",    url: "https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" },
+  { name: "Outfit",        url: "https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" },
   { name: "Inter",         url: "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" },
   { name: "Playfair Display", url: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" },
   { name: "DM Mono",       url: "https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" },

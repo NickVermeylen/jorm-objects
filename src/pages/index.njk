@@ -8,20 +8,36 @@ permalink: /
 
 {%- if section.id == "hero" %}
   <section class="hero" data-section="hero">
-    <h1 class="hero__title">{{ site.title }}</h1>
-    <p class="hero__tagline">{{ site.tagline }}</p>
+    <div class="hero__intro">
+      <p class="eyebrow">Independent design studio<br>Antwerp — Belgium</p>
+      <p class="hero__index">(01—25)</p>
+    </div>
+    <h1 class="hero__title hero__title--animated" aria-label="jorm.">
+      <span class="hero__letter hero__letter--j" aria-hidden="true">j</span>
+      <span class="hero__letter hero__letter--o" aria-hidden="true">o</span>
+      <span class="hero__letter hero__letter--r" aria-hidden="true">r</span>
+      <span class="hero__letter hero__letter--m" aria-hidden="true">m</span>
+      <span class="hero__title-dot" aria-hidden="true">.</span>
+    </h1>
+    <div class="hero__bottom">
+      <p class="hero__tagline">{{ site.tagline }}</p>
+      <a class="hero__scroll" href="#selected-work">Scroll to explore <span>↓</span></a>
+    </div>
   </section>
 {%- endif %}
 
 {%- if section.id == "featured" %}
-  <section class="featured" data-section="featured">
-    <h2 class="featured__heading">Selected Work</h2>
+  <section class="featured" data-section="featured" id="selected-work">
+    <div class="section-heading">
+      <h2 class="featured__heading">Selected work</h2>
+      <a href="/work/" class="section-heading__link">View all work <span>↗</span></a>
+    </div>
     <div class="featured__grid">
       {%- for item in collections.work %}
       {%- if item.data.featured %}
       <a href="{{ item.url }}" class="featured__item">
         <img src="{{ item.data.featuredThumbnail }}" alt="{{ item.data.featuredAlt }}" class="featured__img"{% if not loop.first %} loading="lazy"{% endif %}>
-        <div class="featured__label">{{ item.data.title }} — {{ item.data.year }}</div>
+        <div class="featured__label"><span>{{ item.data.title }}</span><span>{{ item.data.year }}</span></div>
       </a>
       {%- endif %}
       {%- endfor %}
@@ -30,8 +46,10 @@ permalink: /
 {%- endif %}
 
 {%- if section.id == "intro" %}
-  <section class="intro container" data-section="intro">
-    <p>{{ site.intro }}</p>
+  <section class="intro" data-section="intro">
+    <p class="eyebrow">About the studio</p>
+    <p class="intro__statement">{{ site.intro }}</p>
+    <a href="/about/" class="text-link">Read our approach <span>↗</span></a>
   </section>
 {%- endif %}
 
@@ -42,3 +60,33 @@ permalink: /
 {%- endif %}
 {%- endfor %}
 </main>
+
+<script>
+  (() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasDeepLink = Boolean(window.location.hash);
+    let userInterrupted = false;
+    let scrollTimer;
+
+    const cancelAutoScroll = () => {
+      userInterrupted = true;
+      window.clearTimeout(scrollTimer);
+      window.removeEventListener('wheel', cancelAutoScroll);
+      window.removeEventListener('touchstart', cancelAutoScroll);
+      window.removeEventListener('keydown', cancelAutoScroll);
+    };
+
+    if (!reduceMotion && !hasDeepLink && window.scrollY < 10) {
+      window.addEventListener('wheel', cancelAutoScroll, { once: true, passive: true });
+      window.addEventListener('touchstart', cancelAutoScroll, { once: true, passive: true });
+      window.addEventListener('keydown', cancelAutoScroll, { once: true });
+
+      scrollTimer = window.setTimeout(() => {
+        if (!userInterrupted && window.scrollY < 10) {
+          document.getElementById('selected-work')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        cancelAutoScroll();
+      }, 4600);
+    }
+  })();
+</script>
